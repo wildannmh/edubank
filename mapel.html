@@ -23,7 +23,7 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">MaPel</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#masoal">MaSoal</a></li> <!-- hanya admin-->
+                    <li class="nav-item"><a class="nav-link" href="#masoal">MaSoal</a></li>
                 </ul>
                 <a href="profil.html" class="d-flex align-items-center ms-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -42,9 +42,6 @@
                 <h1 class="display-4 fw-bold">EduBank</h1>
                 <p>Selamat datang di mata pelajaran [nama matapelajaran]! Silahkan pilih kategori soal yang ingin kamu pelajari!</p>
             </div>
-            <!-- <div class="image">
-                <img src="https://via.placeholder.com/600x400" alt="Hero Illustration">
-            </div> -->
         </div>
     </section>
 
@@ -53,32 +50,49 @@
         <h2 class="title">Mata Pelajaran</h2>
     </div>
 
+    <!-- Search and Filter -->
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-6">
+                <input id="searchInput" type="text" class="form-control" placeholder="Cari kategori...">
+            </div>
+            <div class="col-md-6">
+                <select id="classFilter" class="form-select">
+                    <option value="">Semua Kelas</option>
+                    <option value="10">Kelas 10</option>
+                    <option value="11">Kelas 11</option>
+                    <option value="12">Kelas 12</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
     <!-- Content -->
     <div class="container my-5">
-        <div class="row row-cols-1 row-cols-md-3 g-4">            
-            <div class="col">
+        <div id="categories" class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" data-class="10">
                 <div class="card h-100">
                     <a href="kategori.html" class="text-decoration-none text-dark">
                         <div class="card-body">
-                            <h5 class="card-title text-center mb-0">Kategori 1</h5>
+                            <h5 class="card-title text-center mb-0">Kategori 1 - Kelas 10</h5>
                         </div>
                     </a>
                 </div>
             </div>
-            <div class="col">
+            <div class="col" data-class="11">
                 <div class="card h-100">
                     <a href="kategori.html" class="text-decoration-none text-dark">
                         <div class="card-body">
-                            <h5 class="card-title text-center mb-0">Kategori 2</h5>
+                            <h5 class="card-title text-center mb-0">Kategori 2 - Kelas 11</h5>
                         </div>
                     </a>
                 </div>
             </div>
-            <div class="col">
+            <div class="col" data-class="12">
                 <div class="card h-100">
                     <a href="kategori.html" class="text-decoration-none text-dark">
                         <div class="card-body">
-                            <h5 class="card-title text-center mb-0">Kategori 3</h5>
+                            <h5 class="card-title text-center mb-0">Kategori 3 - Kelas 12</h5>
                         </div>
                     </a>
                 </div>
@@ -178,5 +192,26 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchQuery = this.value.toLowerCase();
+            const categories = document.querySelectorAll('#categories .col');
+
+            categories.forEach(category => {
+                const title = category.querySelector('.card-title').textContent.toLowerCase();
+                category.style.display = title.includes(searchQuery) ? '' : 'none';
+            });
+        });
+
+        document.getElementById('classFilter').addEventListener('change', function() {
+            const selectedClass = this.value;
+            const categories = document.querySelectorAll('#categories .col');
+
+            categories.forEach(category => {
+                const categoryClass = category.getAttribute('data-class');
+                category.style.display = selectedClass === '' || categoryClass === selectedClass ? '' : 'none';
+            });
+        });
+    </script>
 </body>
 </html>

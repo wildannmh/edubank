@@ -65,37 +65,56 @@
         const commentInput = document.getElementById('comment-input');
         const usernameInput = document.getElementById('username-input');
         const showUsernameCheckbox = document.getElementById('show-username-checkbox');
-
+    
         // Load comments from localStorage
         function loadComments() {
             const comments = JSON.parse(localStorage.getItem('comments')) || [];
             commentsSection.innerHTML = '';
-            comments.forEach(({ username, comment }) => {
+            comments.forEach(({ username, comment }, index) => {
                 const commentBox = document.createElement('div');
-                commentBox.className = 'comment-box';
-
+                commentBox.className = 'comment-box d-flex justify-content-between align-items-center mb-3';
+    
+                const commentContent = document.createElement('div');
+                commentContent.className = 'comment-content';
+    
                 // Add username if available
                 if (username) {
                     const usernameElement = document.createElement('div');
-                    usernameElement.className = 'comment-username';
+                    usernameElement.className = 'comment-username fw-bold';
                     usernameElement.innerText = username;
-                    commentBox.appendChild(usernameElement);
+                    commentContent.appendChild(usernameElement);
                 }
-
+    
                 const commentText = document.createElement('div');
                 commentText.innerText = comment;
-                commentBox.appendChild(commentText);
-
+                commentContent.appendChild(commentText);
+    
+                commentBox.appendChild(commentContent);
+    
+                // Add delete button
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'btn btn-outline-danger btn-sm';
+                deleteButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                    </svg>
+                `;
+                deleteButton.addEventListener('click', () => {
+                    deleteComment(index);
+                });
+                commentBox.appendChild(deleteButton);
+    
                 commentsSection.appendChild(commentBox);
             });
         }
-
+    
         // Add comment
         commentForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const comment = commentInput.value.trim();
             const username = showUsernameCheckbox.checked ? usernameInput.value.trim() : null;
-
+    
             if (comment) {
                 const comments = JSON.parse(localStorage.getItem('comments')) || [];
                 comments.push({ username: username || 'Anonim', comment });
@@ -105,9 +124,17 @@
                 loadComments();
             }
         });
-
+    
+        // Delete comment
+        function deleteComment(index) {
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            comments.splice(index, 1);
+            localStorage.setItem('comments', JSON.stringify(comments));
+            loadComments();
+        }
+    
         // Initial load
         loadComments();
-    </script>
+    </script>    
 </body>
 </html>
