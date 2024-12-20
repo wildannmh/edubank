@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+.hero {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 100px 0;
+    position: relative;
+}
+.hero .content {
+    max-width: 600px;
+}
+.hero .btn-primary {
+    background-color: #ff8c00;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+.hero img {
+    max-width: 100%;
+    padding-left: 100px;
+}
+.title {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+.navbar-brand img {
+    height: 40px;
+}
+.navbar .btn {
+    border-radius: 20px;
+}
+footer {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
