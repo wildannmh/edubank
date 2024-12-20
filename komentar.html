@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komentar - EduBank</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .navbar-brand img {
+            height: 40px;
+        }
+        .navbar .btn {
+            border-radius: 20px;
+        }
+        footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .comment-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                EduBank
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                </ul>
+                <a href="profil.html" class="d-flex align-items-center ms-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container">
+        <h2 class="mb-4">Komentar Latihan Soal</h2>
+        <div id="comments-section"></div>
+        <form id="comment-form">
+            <div class="mb-3">
+                <textarea id="comment-input" class="form-control" placeholder="Tambahkan komentar Anda..." rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Tambah Komentar</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 EduBank. All rights reserved.
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const commentsSection = document.getElementById('comments-section');
+        const commentForm = document.getElementById('comment-form');
+        const commentInput = document.getElementById('comment-input');
+
+        // Load comments from localStorage
+        function loadComments() {
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            commentsSection.innerHTML = '';
+            comments.forEach((comment, index) => {
+                const commentBox = document.createElement('div');
+                commentBox.className = 'comment-box';
+                commentBox.innerText = comment;
+                commentsSection.appendChild(commentBox);
+            });
+        }
+
+        // Add comment
+        commentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const comment = commentInput.value.trim();
+            if (comment) {
+                const comments = JSON.parse(localStorage.getItem('comments')) || [];
+                comments.push(comment);
+                localStorage.setItem('comments', JSON.stringify(comments));
+                commentInput.value = '';
+                loadComments();
+            }
+        });
+
+        // Initial load
+        loadComments();
+    </script>
+</body>
+</html>
